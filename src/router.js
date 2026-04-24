@@ -9,9 +9,19 @@ const routes = [
     component: HomePage,
   },
   {
-    path: '/other',
-    name: 'other',
-    component: () => import('@/views/OtherPage.vue'),
+    path: '/Dashboard',
+    name: 'dashboard',
+    component: () => import('@/views/HomeDashboard.vue'),
+  },
+  {
+    path: '/List',
+    name: 'list',
+    component: () => import('@/views/HomeListPage.vue'),
+  },
+  {
+    path: '/Status',
+    name: 'status',
+    component: () => import('@/views/StatusPage.vue'),
   },
   {
     path: '/:pathMatch(.*)*',
