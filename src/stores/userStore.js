@@ -1,23 +1,35 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { reactive, toRefs } from 'vue'
 
 export const useUserStore = defineStore('user', () => {
-  const user = ref('')
-  const isLoggedIn = ref(false)
+  const state = reactive({
+    user: '',
+    isLoggedIn: false,
+    justLoggedIn: false,
+  })
+  // const user = ref('')
+  // const isLoggedIn = ref(false)
 
   function login(username) {
-    user.value = username
-    isLoggedIn.value = true
+    state.user = username
+    state.isLoggedIn = true
+    state.justLoggedIn = true
+    // user.value = username
+    // isLoggedIn.value = true
   }
 
   function logout() {
-    user.value = ''
-    isLoggedIn.value = false
+    state.user = ''
+    state.isLoggedIn = false
+    state.justLoggedIn = false
+    // user.value = ''
+    // isLoggedIn.value = false
   }
 
   return {
-    user,
-    isLoggedIn,
+    // user,
+    // isLoggedIn,
+    ...toRefs(state),
     login,
     logout,
   }
