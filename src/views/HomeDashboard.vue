@@ -1,8 +1,10 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useUserStore } from '@/stores/userStore'
+import { useHomeStore } from '@/stores/homeStore'
 
 const userStore = useUserStore()
+const homeStore = useHomeStore()
 const showWelcome = ref(false)
 
 onMounted(() => {
@@ -14,6 +16,29 @@ onMounted(() => {
       userStore.justLoggedIn = false
     }, 1500)
   }
+})
+
+const outItems = computed(() => {
+  return homeStore.categories.flatMap((category) =>
+    category.items
+      .filter((item) => item.status === 'out')
+      .map((item) => ({
+        ...item,
+        category: category.name,
+      })),
+  )
+})
+
+const lowItems = computed(() => {
+  return homeStore.categories.flatMap((category) =>
+    category.items
+      .filter((item) => item.status === 'low')
+      .map((item) => ({
+        ...item,
+        category: category.name,
+        claimedBy: item.claimedBy,
+      })),
+  )
 })
 </script>
 
@@ -37,9 +62,9 @@ onMounted(() => {
         <div
           v-else
           key="dashboard"
-          class="flex w-full flex-col space-y-4 border p-4"
+          class="flex w-full flex-col space-y-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 shadow-md shadow-amber-50"
         >
-          <h1 class="text-center text-3xl">Need It</h1>
+          <h1 class="text-center text-3xl font-bold">Need It</h1>
           <header class="flex w-full flex-col">
             <div class="flex w-full items-center justify-between p-4">
               <h1>{{ userStore.user }}</h1>
@@ -51,7 +76,7 @@ onMounted(() => {
               </RouterLink>
             </div>
 
-            <div class="flex flex-1 justify-between">
+            <div class="flex flex-1 items-center justify-between space-x-2">
               <button
                 class="flex w-[25%] justify-center rounded-full bg-amber-200 px-2 py-3 text-center text-sm"
               >
@@ -67,19 +92,59 @@ onMounted(() => {
               <button
                 class="flex w-[25%] justify-center rounded-full bg-amber-200 px-2 py-3 text-center text-sm"
               >
-                Go to Home List
+                Home List
+              </button>
+
+              <button
+                class="flex w-[25%] justify-center rounded-full bg-amber-200 px-2 py-3 text-center text-sm"
+              >
+                Claimed
               </button>
             </div>
           </header>
 
           <section class="">
-            <h2>Were out</h2>
-            <div class="h-40 w-full rounded-2xl border bg-amber-100"></div>
+            <h2 class="text-2xl">Were out</h2>
+            <div class="flex justify-evenly p-2 font-bold">
+              <p class="flex flex-1 justify-start">Category</p>
+              <p class="flex flex-1 justify-start">Name</p>
+              <p class="flex flex-1 justify-start">Claimed By</p>
+            </div>
+            <div class="min-h-30 w-full rounded-2xl border bg-amber-100">
+              <div
+                v-for="item in outItems"
+                :key="item.name"
+                class=""
+              >
+                <div class="flex justify-evenly px-2 py-0.5">
+                  <p class="flex flex-1 justify-start">{{ item.category }}</p>
+                  <p class="flex flex-1 justify-start">{{ item.name }}</p>
+                  <p class="flex flex-1 justify-start">{{ item.claimedBy }}</p>
+                </div>
+              </div>
+            </div>
           </section>
 
           <section class="">
-            <h2>Were out</h2>
-            <div class="h-40 w-full rounded-2xl border bg-amber-100"></div>
+            <h2 class="text-2xl">Low</h2>
+            <div class="flex justify-evenly p-2 font-bold">
+              <p class="flex flex-1 justify-start">Category</p>
+              <p class="flex flex-1 justify-start">Name</p>
+              <p class="flex flex-1 justify-start">Claimed By</p>
+            </div>
+            <div class="min-h-30 w-full rounded-2xl border bg-amber-100">
+              <div
+                v-for="item in lowItems"
+                :key="item.name"
+                class=""
+              >
+                <div class="flex flex-1 justify-start px-2 py-0.5">
+                  <p class="flex flex-1 justify-start">{{ item.category }}</p>
+                  <p class="flex flex-1 justify-start">{{ item.name }}</p>
+                  <p class="flex flex-1 justify-start">{{ item.claimedBy }}</p>
+                </div>
+              </div>
+            </div>
           </section>
         </div>
       </Transition>
