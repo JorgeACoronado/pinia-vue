@@ -1,8 +1,13 @@
 import { defineStore } from 'pinia'
-import { reactive, toRefs } from 'vue'
 
-export const useHomeStore = defineStore('home', () => {
-  const state = reactive({
+const statusOrder = {
+  out: 0,
+  low: 1,
+  ok: 2,
+}
+
+export const useHomeStore = defineStore('home', {
+  state: () => ({
     categories: [
       {
         name: 'Food',
@@ -27,38 +32,44 @@ export const useHomeStore = defineStore('home', () => {
         items: [{ name: 'Dawn', status: 'out', claimedBy: '' }],
       },
     ],
-  })
+  }),
 
-  return {
-    ...toRefs(state),
-  }
-  // ---to keep scope low, I will comment out the actions section and add it later---
+  getters: {
+    sortedCategories: (state) => {
+      return state.categories.map((category) => {
+        return {
+          name: category.name,
+          items: [...category.items].sort((a, b) => {
+            return statusOrder[a.status] - statusOrder[b.status]
+          }),
+        }
+      })
+    },
+  },
 
-  // actions: {
-  //   addCategory(name) {
-  //     this.categories.push({ name, items: [] })
-  //   },
+  actions: {
+    addItem(categoryName, itemName, status, claimedBy) {
+      const category = this.categories.find((c) => c.name === categoryName)
 
-  //   addItem(categoryName, itemName) {
-  //     const category = this.categories.find((c) => c.name === categoryName)
-  //     if (category) {
-  //       category.items.push({ name: itemName, status: 'pending' })
-  //     }
-  //   },
+      if (category) {
+        category.items.push({
+          name: itemName,
+          status,
+          claimedBy,
+        })
+      }
+    },
 
-  //   updateItemStatus(categoryName, itemName, status) {
-  //     const category = this.categories.find((c) => c.name === categoryName)
-  //     if (!category) return
+    updateItem(categoryName, oldItemName, updatedItem) {
+      const category = this.categories.find((c) => c.name === categoryName)
+      if (!category) return
 
-  //     const item = category.items.find((i) => i.name === itemName)
-  //     if (item) item.status = status
-  //   },
+      const item = category.items.find((i) => i.name === oldItemName)
+      if (!item) return
 
-  //   removeItem(categoryName, itemName) {
-  //     const category = this.categories.find((c) => c.name === categoryName)
-  //     if (!category) return
-
-  //     category.items = category.items.filter((i) => i.name !== itemName)
-  //   },
-  // },
+      item.name = updatedItem.name
+      item.status = updatedItem.status
+      item.claimedBy = updatedItem.claimedBy
+    },
+  },
 })
