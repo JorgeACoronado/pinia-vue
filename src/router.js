@@ -19,11 +19,6 @@ const routes = [
     component: () => import('@/views/HomeListPage.vue'),
   },
   {
-    path: '/Status',
-    name: 'status',
-    component: () => import('@/views/StatusPage.vue'),
-  },
-  {
     path: '/:pathMatch(.*)*',
     redirect: '/',
   },

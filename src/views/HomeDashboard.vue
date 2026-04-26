@@ -62,7 +62,7 @@ const lowItems = computed(() => {
         <div
           v-else
           key="dashboard"
-          class="flex w-full flex-col space-y-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 shadow-md shadow-amber-50"
+          class="flex w-full flex-col space-y-4 rounded-2xl bg-amber-50 p-4 shadow-md shadow-amber-50"
         >
           <h1 class="text-center text-3xl font-bold">Need It</h1>
           <header class="flex w-full flex-col">
@@ -78,39 +78,34 @@ const lowItems = computed(() => {
 
             <div class="flex flex-1 items-center justify-between space-x-2">
               <button
-                class="flex w-[25%] justify-center rounded-full bg-amber-200 px-2 py-3 text-center text-sm"
+                class="flex w-[25%] justify-center rounded-full border bg-amber-100 px-2 py-3 text-center text-sm"
               >
                 Were Out
               </button>
 
               <button
-                class="flex w-[25%] justify-center rounded-full bg-amber-200 px-2 py-3 text-center text-sm"
+                class="flex w-[25%] justify-center rounded-full border bg-amber-100 px-2 py-3 text-center text-sm"
               >
                 Low
               </button>
 
-              <button
-                class="flex w-[25%] justify-center rounded-full bg-amber-200 px-2 py-3 text-center text-sm"
+              <router-link
+                to="/List"
+                class="flex w-[25%] justify-center rounded-full border bg-amber-100 px-2 py-3 text-center text-sm"
               >
-                Home List
-              </button>
-
-              <button
-                class="flex w-[25%] justify-center rounded-full bg-amber-200 px-2 py-3 text-center text-sm"
-              >
-                Claimed
-              </button>
+                <button>Home List</button>
+              </router-link>
             </div>
           </header>
 
           <section class="">
-            <h2 class="text-2xl">Were out</h2>
+            <h2 class="border-b text-2xl">Were out</h2>
             <div class="flex justify-evenly p-2 font-bold">
               <p class="flex flex-1 justify-start">Category</p>
               <p class="flex flex-1 justify-start">Name</p>
               <p class="flex flex-1 justify-start">Claimed By</p>
             </div>
-            <div class="min-h-30 w-full rounded-2xl border bg-amber-100">
+            <div class="min-h-30 w-full rounded-2xl">
               <div
                 v-for="item in outItems"
                 :key="item.name"
@@ -126,13 +121,13 @@ const lowItems = computed(() => {
           </section>
 
           <section class="">
-            <h2 class="text-2xl">Low</h2>
+            <h2 class="border-b text-2xl">Low</h2>
             <div class="flex justify-evenly p-2 font-bold">
               <p class="flex flex-1 justify-start">Category</p>
               <p class="flex flex-1 justify-start">Name</p>
               <p class="flex flex-1 justify-start">Claimed By</p>
             </div>
-            <div class="min-h-30 w-full rounded-2xl border bg-amber-100">
+            <div class="min-h-30 w-full rounded-2xl">
               <div
                 v-for="item in lowItems"
                 :key="item.name"

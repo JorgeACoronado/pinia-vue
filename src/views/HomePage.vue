@@ -34,7 +34,9 @@ function handleLogin() {
 
 <template>
   <main class="px-2 sm:px-0">
-    <div class="mx-auto w-[90%vw] max-w-[600px] rounded-2xl bg-amber-100 px-2 sm:px-0">
+    <div
+      class="mx-auto w-[90%vw] max-w-[600px] rounded-2xl bg-amber-50 p-4 px-2 shadow-md shadow-amber-50 sm:px-0"
+    >
       <div class="px-10 pt-10 pb-20">
         <h1 class="mb-10 text-center text-4xl">NeedIt</h1>
         <form

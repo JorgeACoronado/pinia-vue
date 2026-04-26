@@ -1,22 +1,30 @@
 import { defineStore } from 'pinia'
-import { reactive, toRef, toRefs } from 'vue'
+import { reactive, toRefs } from 'vue'
 
 export const useHomeStore = defineStore('home', () => {
   const state = reactive({
     categories: [
       {
-        name: 'Dairy',
+        name: 'Food',
         items: [
           { name: 'Milk', status: 'low', claimedBy: 'Mary' },
           { name: 'Cheese', status: 'out', claimedBy: 'George' },
         ],
       },
       {
-        name: 'Produce',
+        name: 'Pets',
         items: [
-          { name: 'Lettuce', status: 'low', claimedBy: 'John' },
-          { name: 'Tomatoes', status: 'out', claimedBy: 'Jane' },
+          { name: 'Pedigree', status: 'low', claimedBy: 'John' },
+          { name: 'shampoo', status: 'out', claimedBy: 'Jane' },
         ],
+      },
+      {
+        name: 'Home Essentials',
+        items: [{ name: 'Paper towels', status: 'ok', claimedBy: '' }],
+      },
+      {
+        name: 'Garden',
+        items: [{ name: 'Dawn', status: 'out', claimedBy: '' }],
       },
     ],
   })
