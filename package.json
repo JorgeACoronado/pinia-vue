@@ -1,5 +1,5 @@
 {
-  "name": "vue-basic-template",
+  "name": "needit-pinia-vue",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -28,6 +28,7 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.2.1",
     "vite": "^8.0.3",
-    "vue-eslint-parser": "^10.4.0"
+    "vue-eslint-parser": "^10.4.0",
+    "wrangler": "^4.85.0"
   }
 }
